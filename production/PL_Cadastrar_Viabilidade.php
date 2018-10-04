@@ -36,7 +36,7 @@ require 'Config/Config4.php';
 
 		$sql3 = $pdo3->prepare("INSERT INTO geral (processo, descricao, tecnico, interessado, uc, cpf, cidade, coordenada_x, coordenada_y, demanda_prevista, potencia_instalada, observacao, status) VALUES (:processo, :descricao, :tecnico, :interessado, :uc, :cpf, :cidade, :coordenada_x, :coordenada_y, :demanda_prevista, :potencia_instalada, :observacao, 'Em Análise')");	
 
-  		$sql4 = $pdo4->prepare("INSERT INTO historico (processo, setor, atribuido, status, data) VALUES (:processo, 'Planejamento', :atribuido, 'Em Análise', :data_entrada)");
+  	$sql4 = $pdo4->prepare("INSERT INTO historico (processo, setor, atribuido, status, data) VALUES (:processo, 'Comercial', :atribuido, 'Em Análise', :data_entrada)");
 
 		$sql->bindValue(":processo", $processo);
 		$sql->bindValue(":descricao", $descricao);
@@ -85,23 +85,18 @@ require 'Config/Config4.php';
   		$sql4->bindValue(":atribuido", $atribuido);
   		$sql4->execute();
 
-		header("Location: Cadastrar_Viabilidade_PL.php");
+		header("Location: PL_Cadastrar_Viabilidade.php");
 
 		exit;
 }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="PT-BR">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>Cadastro de Projeto | </title>
+        <!-- menu head -->
+        <?php
+          require_once("Menu/Menu_head.php");
+        ?>
+        <!-- /menu head -->
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -138,53 +133,30 @@ require 'Config/Config4.php';
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-</head>
 
-		<body class="nav-md"">
-				<div class="container body">
-						<div class="main_container">
-								<div class="col-md-3 left_col">
-										<div class="left_col scroll-view">
-												<div class="navbar nav_title" style="border: 0;">
-														<a href="index.html" class="site_title"><i class="fa fa-pie-chart"></i> <span>Eletrobras</span></a>
-												</div>
 
-												<div class="clearfix"></div>
+        <!-- menu profile quick info -->
+        <?php
+          require_once("Menu/Menu_usuario.php");
+        ?>
+        <!-- /menu profile quick info -->
 
-											<!-- menu profile quick info -->
-												<div class="profile clearfix">
-														<div class="profile_pic">
-																<img src="images/Eletrobras.png" alt="..." class="img-circle profile_img">
-														</div>
-														<div class="profile_info">
-																<span>Usuário</span>
-																<h2><?php echo $_SESSION['usuario'] ?></h2>
-														</div>
-												</div>
-											<!-- /menu profile quick info -->
+        <!-- sidebar menu -->
+        <?php
+          require_once("Menu/PL_Menu.php");
+        ?>
+        <!-- /sidebar menu -->
 
-												<br />
-
-						<!-- sidebar menu -->
-            <?php
-              require_once("Menu/Menu_P.php");
-            ?>
-						<!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-
-            <?php
-              require_once("Menu/Menu_inf_PL.php");
-            ?>
-
-            <!-- /menu footer buttons -->
-										</div>
-								</div>
-
+        <!-- /menu footer buttons -->
+        <?php
+          require_once("Menu/Menu_inf.php");
+        ?>
+        <!-- /menu footer buttons -->
+          
         <!-- top navigation -->
-            <?php
-              require_once("Menu/Menu_top.php");
-            ?>
+        <?php
+          require_once("Menu/Menu_top.php");
+        ?>
         <!-- top navigation -->
 
 							 <!-- page content -->
@@ -369,16 +341,11 @@ require 'Config/Config4.php';
         </div>
         <!-- /page content -->
 
-								<!-- footer content -->
-								<footer>
-										<div class="pull-right">
-														Arthur Mendes - Programa de Cadastro de Projetos - <a href="http://eletrobrasalagoas.com/">Eletrobras distribuição Alagoas</a>
-										</div>
-										<div class="clearfix"></div>
-								</footer>
-								<!-- /footer content -->
-						</div>
-				</div>
+        <!-- footer content -->
+        <?php
+          require_once("Menu/Menu_footer.php");
+        ?>
+        <!-- /footer content -->
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>

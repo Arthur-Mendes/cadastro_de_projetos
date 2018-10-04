@@ -76,16 +76,11 @@ require 'Config/Config.php';
 
 ?>
 
-<!DOCTYPE html>
-<html lang="PT-BR">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	  
-    <title>Cadastro de Projetos | </title>
+        <!-- menu head -->
+        <?php
+          require_once("Menu/Menu_head.php");
+        ?>
+        <!-- /menu head -->
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -124,55 +119,28 @@ require 'Config/Config.php';
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
 
-  </head>
+        <!-- menu profile quick info -->
+        <?php
+          require_once("Menu/Menu_usuario.php");
+        ?>
+        <!-- /menu profile quick info -->
 
-   <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-pie-chart"></i> <span>Eletrobras</span></a>
-            </div>
+        <!-- sidebar menu -->
+        <?php
+          require_once("Menu/PL_Menu.php");
+        ?>
+        <!-- /sidebar menu -->
 
-            <div class="clearfix"></div>
-
-                        <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="images/Eletrobras.png" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Usuário</span>
-                <h2><?php echo $_SESSION['usuario'] ?></h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-
-            <?php
-              require_once("Menu/Menu_P.php");
-            ?>
-            
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-
-            <?php
-              require_once("Menu/Menu_inf_PL.php");
-            ?>
-
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
-
+        <!-- /menu footer buttons -->
+        <?php
+          require_once("Menu/Menu_inf.php");
+        ?>
+        <!-- /menu footer buttons -->
+          
         <!-- top navigation -->
-            <?php
-              require_once("Menu/Menu_top.php");
-            ?>
+        <?php
+          require_once("Menu/Menu_top.php");
+        ?>
         <!-- top navigation -->
 
         <!-- page content -->
@@ -236,29 +204,17 @@ require 'Config/Config.php';
                           <label class="control-label col-md-2 col-sm-2 col-xs-12" for="ordem">Especificação da Obra
                           </label>
                           <div class="col-md-4 col-sm-4 col-xs-12">
-                            <select name="ordem" class="form-control">
-                              <option></option>
-                              <option>69KV-ELETROMECÂNICO</option>
-                              <option>69KV-LINHA DE DISTRIBUIÇÃO</option>
-                              <option>69KV-MEDIÇÃO</option>
-                              <option>69KV-PROTEÇÃO E AUTOMAÇÃO</option>
-                              <option>69KV-REALOCAÇÃO DE LINHA</option>
-                              <option>AUMENTO DA SUBESTAÇÃO</option>
-                              <option>AUMENTO DE DEMANDA</option>
-                              <option>COMERCIAL</option>
-                              <option>COMPARTILHAMENTO DE INFRAESTRUTURA</option>
-                              <option>CONSULTA DE ACESSO</option>
-                              <option>CONSULTA DE ACESSO - DAL</option>
-                              <option>ILUMINAÇÃO PÚBLICA</option>
-                              <option>INDUSTRIAL</option>
-                              <option>LOTEAMENTOS - RESIDENCIAIS - COHAB</option>
-                              <option>OUTROS</option>
-                              <option>PRÉDIOS HABBITACIONAIS</option>
-                              <option>PROJETO DE PARALELISMO MOMENTÂNEO</option>
-                              <option>REDUÇÃO DE CAPACIDADE</option>
-                              <option>RURAL - SÍTIOS - FAZENDAS</option>
-                              <option>SERVIÇO PÚBLICO</option>
-                              <option>SOLICITAÇÃO DE ACESSO - VT</option>
+                            <select name="ordem" id="ordem" class="form-control" placeholder="Campo Obrigatório">
+                              <option><?php echo $ordem ?></option>
+                                <?php
+                                  $selectOrdem= $pdo->prepare("SELECT * FROM ordem ORDER BY nome ASC");
+                                  $selectOrdem->execute();
+                                  $fetchAll = $selectOrdem->fetchAll();
+                                  foreach($fetchAll as $ordemLista)
+                                    {
+                                      echo '<option value="'.$ordemLista['nome'].'">'.$ordemLista['nome'].'</option>';
+                                    }
+                                ?>
                             </select>
                           </div>
                         </div>
@@ -274,247 +230,18 @@ require 'Config/Config.php';
                         <div class="form-group">
                           <label for="tecnico" class="control-label col-md-2 col-sm-2s col-xs-12">Técnico</label>
                           <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select name="tecnico" class="form-control">
-                              <option></option>
-                              <option>ACÁCIO DE OLIVEIRA SERAFIM</option>
-                              <option>ADEIRLEY SILVA DOS SANTOS</option>
-                              <option>ADRIANO GALINDO CASTOR</option>
-                              <option>AIRLES VEIGA PESSOA</option>
-                              <option>AISLAN LOPES DE OLIVEIRA</option>
-                              <option>ALBERTO JORGE DA MOTA SILVEIRA</option>
-                              <option>ALBERTO LINS LEITE</option>
-                              <option>ALBERTO TORRES BARRETO</option>
-                              <option>ALEXANDRE CAVALCANTE DE ALMEIDA</option>
-                              <option>ALFREDO GUTTENBERG DE MENDONÇA</option>
-                              <option>ALISSON GOMES RODRIGUES</option>
-                              <option>ALOISIO ERNANI TORRES DE OLIVEIRA</option>
-                              <option>ALVANIR TORRES DE ARAÚJO FILHO</option>
-                              <option>ALVARO LYRA CINTRA ESEQUIEL</option>
-                              <option>ÁLVARO OTÁVIO VIEIRA MACHADO</option>
-                              <option>AMANDA COUTO PIMENTEL</option>
-                              <option>AMANFRINNI DE MELO QUEIROZ</option>
-                              <option>ANDERSON KENNEDY DA SILVA BOLEVARD</option>
-                              <option>ANDERSON TAVARES MOREIRA</option>
-                              <option>ANDRE GRAÇA GENEROSO PEREIRA</option>
-                              <option>ANTÔNIO CARLOS CHAGAS</option>
-                              <option>ANTONIO OLAVO FALCÃO LIMA</option>
-                              <option>ARISTEDES FARIAS NETO</option>
-                              <option>ARLUZENILDO BARROS</option>
-                              <option>ARMANDO MONTEIRO DE LIMA JUNIOR</option>
-                              <option>ARTHUR SEBASTIÃO BARBOSA AMARAL</option>
-                              <option>ATAHUALPA BASTOS LELIS</option>
-                              <option>ATONIO CARLOS CHARGAS</option>
-                              <option>AVELAR DE OLIVEIRA LOPES LOBO</option>
-                              <option>BRUNO DE AGUIAR AMARAL</option>
-                              <option>BRUNO LUIZ LOPES DÓRIA</option>
-                              <option>BRUNO PEIXOTO</option>
-                              <option>BRUNO XAVIER PINHEIRO GALVÃO</option>
-                              <option>BUFFET SIMIÃO GOMES FERREIRA</option>
-                              <option>CARLOS ALBERTO DA SILVA</option>
-                              <option>CARLOS AUGUSTO DE CARVALHO FERREIRA</option>
-                              <option>CARLOS EUGÊNIO C. SILVA</option>
-                              <option>CARLOS HENRIQUE DE LIRA</option>
-                              <option>CARLOS HENRIQUE FIGUEIREDO LOPES LIMA</option>
-                              <option>CARLOS MANASSÉS DA SILVA</option>
-                              <option>CARLOS SHIGUESHI IMAMURA</option>
-                              <option>CÉLIO ROBERTO DE MELO</option>
-                              <option>CELSO ANTÔNIO MAJCHROVICZ</option>
-                              <option>CEZAR DE OLIVEIRA PEREIRA</option>
-                              <option>CÍCERO ARAÚJO SILVA</option>
-                              <option>CLAYDSON INOCÊNCIO VASCONCELOS</option>
-                              <option>CLÉBER MÁRIO BORGES</option>
-                              <option>CLEITON VANDERLEI SANDES</option>
-                              <option>CLEONILTON DE MELO</option>
-                              <option>DANIEL MACIEL DE BARROS LEITE</option>
-                              <option>DANIEL PINTO NASCIMENTO</option>
-                              <option>DAVID MARLON MONTEIRO MARCOLAN</option>
-                              <option>DERALDO LOPES CAMERINO JÚNIOR</option>
-                              <option>DIEGO AURÉLIO DA SILVA PONTES</option>
-                              <option>DIEGO CORREIA HOLANDA</option>
-                              <option>DIEGO DOS SANTOS BATISTA</option>
-                              <option>DIEGO JOSÉ LIMA ROCHA</option>
-                              <option>DIEGO JOSÉ UCHÔA QUINTELA</option>
-                              <option>DIOGO JOSÉ LIMA ROCHA</option>
-                              <option>D'SOLARES</option>
-                              <option>EDERALDO GEOVANE SILVA</option>
-                              <option>EDERALDO PEREIRA SANTOS</option>
-                              <option>EDGARD JOSÉ FERNANDES</option>
-                              <option>EDIBERTO TAVARES DE LIMA</option>
-                              <option>EDIS DE OLIVEIRA BESSA JUNIOR</option>
-                              <option>EDMUNDO SPÍNOLA JUNIOR</option>
-                              <option>EDNALDO GEOVANE</option>
-                              <option>EDNALDO GEOVANE SILVA</option>
-                              <option>EDNEY MIKAEL VIEIRA DE ALBUQUERQUE</option>
-                              <option>EDSON ANTONIO DE ARAÚJO</option>
-                              <option>EDSON TENÓRIO DO NASCIMENTO</option>
-                              <option>EDSON TENÓRIO NASCIMENTO</option>
-                              <option>EDUARDO DIAZ DE LA CRUZ</option>
-                              <option>EDUARDO FERREIRA ROCHA</option>
-                              <option>EDUARDO FREIRE ROCHA</option>
-                              <option>EDUARDO RODRIGO GUEDES E SILVA</option>
-                              <option>ELTON FERRAZ CABRAL</option>
-                              <option>ERIK SAZIO MACHADO MORAIS MÁRCIO</option>
-                              <option>ERLANDSON LEMOS DOS SANTOS</option>
-                              <option>ESDRAS MANOEL SANTOS FERREIRA DA SILVA</option>
-                              <option>ESDRAS PEIXOTO MOREIRA DE FARIAS</option>
-                              <option>EUCLIDES PACHECO NETO</option>
-                              <option>EUDES GONÇALVES DE ARAÚJO</option>
-                              <option>EURICO KIYOHARA</option>
-                              <option>EVERALDO ALBUQUERQUE ALVES</option>
-                              <option>FABIANO FUCK</option>
-                              <option>FABIANO PASSOS BASTOS</option>
-                              <option>FÁBIO AUGUSTO A. DE LUCENA</option>
-                              <option>FÁBIO FERREIRA DE LIMA</option>
-                              <option>FÁBIO MACHADO NOBRE</option>
-                              <option>FELIPE JUNIO BRANDÃO SILVA</option>
-                              <option>FERNANDA DE BRITO PEREIRA</option>
-                              <option>FERNANDO JUVENAL SILVA VASCONCELOS</option>
-                              <option>FERNANDO SIMÃO GOMES FERREIRA</option>
-                              <option>FIRMINO TELES VIEIRA FILHO</option>
-                              <option>FLÁVIO BISPO DA ROCHA</option>
-                              <option>FRANCISCO MARCÍLIO DE PONTES CONFESSOR</option>
-                              <option>GABRIEL AUGUSTO BUSS</option>
-                              <option>GABRIEL DE OLIVEIRA BRANDÃO E GOMES</option>
-                              <option>GEILSON CAVALCANTE ALVES</option>
-                              <option>GERALDO RICARTE DE ARAÚJO FILHO</option>
-                              <option>GEREMIAS P. LIMA</option>
-                              <option>GILBERTO BEZERRA DE OLIVEIRA</option>
-                              <option>GILBERTO MANTANI</option>
-                              <option>GISELLE CRISTINA LEITE RAPOSO</option>
-                              <option>GRAZIELLY DORNELAS DO VALE</option>
-                              <option>GUSTAVO DE ALENCAR FREITAS</option>
-                              <option>GUSTAVO HALBREICH</option>
-                              <option>HAMILTO GODINHO</option>
-                              <option>HELDER AMARAL ARAÚJO</option>
-                              <option>ISAIAS CORREIA LIMA</option>
-                              <option>ÍTALO PINHEIRO DE LEMOS</option>
-                              <option>IURY  MONTEIRO BEZERRA</option>
-                              <option>IVAN REINALDO DA SILVA TORRES</option>
-                              <option>JAIRO PACHECO</option>
-                              <option>JAMERSON CALVOCANTE DE LIMA</option>
-                              <option>JAMES RODRIGUES DOS SANTOS</option>
-                              <option>JAYME CARNEIRO JUNIOR</option>
-                              <option>JAYME DE MIRANDA FAHUR</option>
-                              <option>JEFFERSON DE LIMA ARAÚJO FILHO</option>
-                              <option>JELZAIR ANDRADE DE SANTANA</option>
-                              <option>JOÃO EVERALDO MALCHER GALVÃO</option>
-                              <option>JOÃO GALVÃO DA SILVA</option>
-                              <option>JOÃO MEDEIROS ROCHA</option>
-                              <option>JOÃO OSVALDO DA CRUS</option>
-                              <option>JOÃO PAULO DE OMENA DA ANDRADE</option>
-                              <option>JOEMIR GENTIL MOCELLIN</option>
-                              <option>JORGE ALMEIDA</option>
-                              <option>JORGE ALMEIDA DOS SANTOS JUNIOR</option>
-                              <option>JOSÉ AUGUSTO GOMES DA CUNHA</option>
-                              <option>JOSÉ CARLOS DA SILVA</option>
-                              <option>JOSÉ CÍCERO FERNANDES TENÓRIO</option>
-                              <option>JOSÉ CLÓVIS SILVA DE ALCÂNTARA</option>
-                              <option>JOSÉ DELCIO JATOBÁ CORCINO</option>
-                              <option>JOSÉ DILTON DE MEDEIROS RODRIGUES</option>
-                              <option>JOSÉ FERNANDO FERREIRA DOS SANTOS</option>
-                              <option>JOSÉ FERREIRA FERREIRA DOS SANTOS</option>
-                              <option>JOSÉ GALVÃO DA SILVA</option>
-                              <option>JOSÉ LUCIANO GOMES DA SILVA</option>
-                              <option>JOSÉ LUIZ DE SOUZA SOARES</option>
-                              <option>JOSÉ ROBERTO MARTINS BARBOSA JÚNIOR</option>
-                              <option>JOSE RONALDO ERALDO CAVALCANTE</option>
-                              <option>JOSÉ RONALDO MALCHER GALVÃO</option>
-                              <option>JOSENILSON FELIX DE ARAÚJO</option>
-                              <option>JOSIAS ZEFERINO DE MUNIZ</option>
-                              <option>JOZILDO TAVARES DOS SANTOS</option>
-                              <option>JUAREZ MEIRA GALVÃO</option>
-                              <option>JUCÉLIO PEREIRA FÉLIX</option>
-                              <option>JULIANA TIMÓTEO LOPES CHAGAS</option>
-                              <option>JÚLIO CÉSAR PEREIRA</option>
-                              <option>JÚLIO DE ANDRADE BELO NETO</option>
-                              <option>KLAYSON FERNANDO MORAES PEDROSA DA COSTA</option>
-                              <option>LEONARDO FONTES ANDION</option>
-                              <option>LEOPOLDO BARACHO MACENA</option>
-                              <option>LUCÉLIA NASCIMENTO LUZ</option>
-                              <option>LUCIANA FONSECA MAIA</option>
-                              <option>LUCIANO JÚLIO DOS SANTOS</option>
-                              <option>LUCIVAN  DE BRITO MACÁRIO</option>
-                              <option>LUIZ ANTÔNIO DOS SANTOS GUEDES</option>
-                              <option>LUIZ CARLOS COSTA FILHO</option>
-                              <option>LUIZ EDUARDO NUNES FILHO</option>
-                              <option>LUIZ EDUARDO VASCONCELOS SANTOS</option>
-                              <option>LUIZ GUSTAVO GUIMARÃES SANTOS</option>
-                              <option>LUIZ JORGE NETO</option>
-                              <option>LUIZA BRENNAND QUEIROZ CAMPOS</option>
-                              <option>MACIUS BELTRÃO SIQUEIRA</option>
-                              <option>MANFRINNI DE MELO QUEIROZ</option>
-                              <option>MARCELO RAPOSO RAMIRES SALDANHA</option>
-                              <option>MARCIO BOURBON DA LUZ</option>
-                              <option>MARCIO CESAR DE MORAES CORREIA</option>
-                              <option>MÁRCIO DE CARVALHO GOBBIRCIO LOPES</option>
-                              <option>MARCIO JOSÉ MELO MONTEIRO DA ROCHA</option>
-                              <option>MÁRCIO LOPES DOS SANTOS</option>
-                              <option>MÁRCIO MONTEIRO DA ROCHA</option>
-                              <option>MARCIO SOARES RODRIGUES</option>
-                              <option>MARCIO TÚLIO FERNANDES SILVA SANTOS DE AGUIAR</option>
-                              <option>MARCO ANTONIO NEVES GANDARA</option>
-                              <option>MARCOS ANTONIO CERUTTI</option>
-                              <option>MARCOS ANTÔNIO GONÇALVES DOS SANTOS</option>
-                              <option>MARCOS ANTONIO MACHADO DIAS</option>
-                              <option>MARCOS ANTÔNIO ROSA DA COSTA</option>
-                              <option>MARCOS EXPEDITO DO NASCIMENTO</option>
-                              <option>MARCOS GERALDO LEITE</option>
-                              <option>MARIA APARECIDA ALVES PEREIRA</option>
-                              <option>MARIO LYCIO SEVE DE ABREU E LIMA</option>
-                              <option>MATHEUS DIAS ALMEIDA</option>
-                              <option>MAURÍCIO LEITE TENÓRIO COSTA</option>
-                              <option>MAURICIO TULIO FERNANDES AGUIAR</option>
-                              <option>MAURO AZEVEDO DE BORBA DELGADO</option>
-                              <option>MICHEL EDMOND LE CAMPION</option>
-                              <option>MICHELE MENDES LIMA LISBOA</option>
-                              <option>MICHELLE CALADO PALLADINO</option>
-                              <option>MIGUEL ORSOLETE FILHO</option>
-                              <option>MIGUEL ORSOLETE NETO</option>
-                              <option>MOISES DA SILVA FERREIRA</option>
-                              <option>MÔNICA RAFAELA DA SILVA</option>
-                              <option>PAULO ANDRÉ DOS SANTOS ARAÚJO ALVES </option>
-                              <option>PAULO DUÉ</option>
-                              <option>PAULO JACINTO DO NASCIMENTO NETO</option>
-                              <option>PAULO ROGÉRIO CERQUEIRA</option>
-                              <option>PETRÚCIO MANOEL JUSTINO</option>
-                              <option>PIERLORENZO MARIMPIETRI</option>
-                              <option>PLINIO JOSÉ ALVES DE ALBUQUERQUE</option>
-                              <option>RAULINO SILVA</option>
-                              <option>RENATA BARBOSA CAVALCANTE</option>
-                              <option>REYLON FEIJÓ COSTA</option>
-                              <option>RICARDO DE JESUS ALMEIDA</option>
-                              <option>RICARDO PEREIRA FEITOSA</option>
-                              <option>ROBERTO DA SILVA</option>
-                              <option>RODOLPHO WONG</option>
-                              <option>ROGÉRIO GONDIM DA ROSA OITICICA</option>
-                              <option>ROSA MARIA RIBEIRO DE ALBUQUERQUE</option>
-                              <option>ROSEVALDO PEREIRA DE MELO JÚNIOR</option>
-                              <option>ROSIVALDO CAMILO DA PAIXÃO</option>
-                              <option>RUITHER DOS SANTOS</option>
-                              <option>SAMUEL DO NASCIMENTO SILVA</option>
-                              <option>SHYRDNEZ DE AZEVEDO FARIAS</option>
-                              <option>SONIVAL DA SILVA SANTOS JÚNIOR</option>
-                              <option>SWYTZ JOSÉ SILVA TAVARES</option>
-                              <option>TAIS DE ALMEIDA</option>
-                              <option>TALES AUGUSTO COSTA GOMES</option>
-                              <option>TERCIO LUIZ DA SILVA JUNIOR</option>
-                              <option>THAGO JORGE BARROS BEZERRA</option>
-                              <option>THIAGO BITTENCOURT DE CARVALHO</option>
-                              <option>THIAGO DELGADO DUARTE</option>
-                              <option>THIAGO JORGE DE BARROS BEZERRA</option>
-                              <option>UURY MONTEIRO BEZERRA</option>
-                              <option>VAGNER EDIELSON DE ARAÚJO PAIVA</option>
-                              <option>VAGNER EDÍLSON DE ARAÚJO PAIVA</option>
-                              <option>VALTER HIDEYUKI OKUBO</option>
-                              <option>VALTER LEANDRO DA SILVA FILHO</option>
-                              <option>VICENTE PAULO CAVALCANTE MATOS FILHO</option>
-                              <option>VIRGÍLIO VILAR BRASILEIRO</option>
-                              <option>VITOR ROCHA GOIS DA SILVA</option>
-                              <option>WAGNER TENÓRIO DA SILVA</option>
-                              <option>WALTER ANTONIO NOGUEIRA JUNIOR</option>
-                              <option>WALTER HIDEYUKI OKUBO</option>
-                              <option>WALTER SANTOS LUGO JUNIOR</option>
-                            </select>
+                            <select name="tecnico" class="form-control" id="tecnico" placeholder="Campo Obrigatório">
+                              <option><?php echo $ordem ?></option>
+                                <?php
+                                  $selectTecnico = $pdo->prepare("SELECT * FROM tecnicos ORDER BY nome ASC");
+                                  $selectTecnico->execute();
+                                  $fetchAll = $selectTecnico->fetchAll();
+                                  foreach($fetchAll as $tecnico)
+                                    {
+                                      echo '<option value="'.$tecnico['nome'].'">'.$tecnico['nome'].'</option>';
+                                    }
+                                ?>
+                              </select>
                           </div>
                         </div>
 

@@ -1,7 +1,6 @@
 <?php
 session_start();
 require 'Config/Config.php';
-
   if(strstr($_SESSION['setor'],'Planejamento') !== false){
 
   }else{
@@ -9,17 +8,11 @@ require 'Config/Config.php';
   }
 ?>
 
-<!DOCTYPE html>
-<html lang="PT-BR">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
-
-    <title>Departamento de Projetos</title>
+        <!-- menu head -->
+        <?php
+          require_once("Menu/Menu_head.php");
+        ?>
+        <!-- /menu head -->
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,91 +31,37 @@ require 'Config/Config.php';
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-</head>
 
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col" style="position:fixed">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-pie-chart"></i> <span>Eletrobras</span></a>
-            </div>
+        <!-- menu profile quick info -->
+        <?php
+          require_once("Menu/Menu_usuario.php");
+        ?>
+        <!-- /menu profile quick info -->
 
-            <div class="clearfix"></div>
+        <!-- sidebar menu -->
+        <?php
+          require_once("Menu/PL_Menu.php");
+        ?>
+        <!-- /sidebar menu -->
 
-                        <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="images/Eletrobras.png" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Usuário</span>
-                <h2><?php echo $_SESSION['usuario'] ?></h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            <?php
-              require_once("Menu/Menu_P.php");
-            ?>
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-
-            <?php
-              require_once("Menu/Menu_inf_PL.php");
-            ?>
-
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
-
+        <!-- /menu footer buttons -->
+        <?php
+          require_once("Menu/Menu_inf.php");
+        ?>
+        <!-- /menu footer buttons -->
+          
         <!-- top navigation -->
-        <div class="top_nav" style="width:200%">
-          <div class="nav_menu">
-            <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-              </div>
-
-              <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/Eletrobras.png" alt=""><?php echo $_SESSION['usuario'] ?>
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Usuário</a></li>
-                    <li>
-                      <a href="javascript:;">
-                        <span>Configurações</span>
-                      </a>
-                    </li>
-                    <li><a href="javascript:;">Ajuda</a></li>
-                    <li><a href="sair.php"><i class="fa fa-sign-out pull-right"></i> Sair</a></li>
-                  </ul>
-                </li>
-
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        <?php
+          require_once("Menu/Menu_top.php");
+        ?>
         <!-- top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main" style="width:200%">
+        <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Demanda de Projetos</h3>
+                <h3>Histórico</h3>
               </div>
 
               <div class="title_right">
@@ -140,31 +79,25 @@ require 'Config/Config.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Projetos</small></h2>
+                    <h2>Histórico de alterações</small></h2>
                     
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                    <table id="datatable-buttons" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th>Processo</th>
-                          <th>Responsável Técnico</th>
-                          <th>Status</th>
-                          <th>Nome (Empreendimento)</th>
-                          <th>Interresado</th>
-                          <th>Ordem</th>
-                          <th>Bairro</th>
-                          <th>Data de Entrada</th>
-                          <th>Potência</th>
-                          <th>Nº da VT</th>
                           <th>Atribuido</th>
+                          <th>Status</th>
+                          <th>Data de Alteração</th>
+                          <th>Setor Responsável</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php 
                           
-                          $sql = $pdo->prepare("SELECT * FROM viabilidades");
+                          $sql = $pdo->prepare("SELECT * FROM historico WHERE setor='Planejamento'");
                           $sql->execute();
                           
                           if($sql->rowCount() > 0) {
@@ -172,16 +105,10 @@ require 'Config/Config.php';
                               ?>
                                 <tr>
                                   <td><?php echo $value['processo'] ?></td>
-                                  <td><?php echo $value['tecnico'] ?></td>
-                                  <td><?php echo $value['status'] ?></td>
-                                  <td><?php echo $value['descricao'] ?></td>
-                                  <td><?php echo $value['interessado'] ?></td>
-                                  <td><?php echo $value['ordem'] ?></td>
-                                  <td><?php echo $value['bairro'] ?></td>
-                                  <td><?php echo $value['data_entrada']; ?></td>
-                                  <td><?php echo $value['demanda_prevista'] ?> KVA</td>
-                                  <td><?php echo $value['viabilidade_tecnica'] ?></td>
                                   <td><?php echo $value['atribuido'] ?></td>
+                                  <td><?php echo $value['status'] ?></td>
+                                  <td><?php echo $value['data'] ?></td>
+                                  <td><?php echo $value['setor'] ?></td>
                                 </tr>
                               <?php
                             }
@@ -199,15 +126,10 @@ require 'Config/Config.php';
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer style="width:200%">
-          <div class="pull-right" >
-              Arthur Mendes - Programa de Cadastro de Projetos - <a href="http://eletrobrasalagoas.com/">Eletrobras distribuição Alagoas</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+        <?php
+          require_once("Menu/Menu_footer.php");
+        ?>
         <!-- /footer content -->
-      </div>
-    </div>
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>

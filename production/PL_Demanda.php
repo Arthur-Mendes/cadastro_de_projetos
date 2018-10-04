@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'Config/Config.php';
+require 'Config/conexao.php';
   if(strstr($_SESSION['setor'],'Planejamento') !== false){
 
   }else{
@@ -8,17 +8,11 @@ require 'Config/Config.php';
   }
 ?>
 
-<!DOCTYPE html>
-<html lang="PT-BR">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="images/favicon.ico" type="image/ico" />
-
-    <title>Departamento de Projetos</title>
+        <!-- menu head -->
+        <?php
+          require_once("Menu/Menu_head.php");
+        ?>
+        <!-- /menu head -->
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,53 +31,29 @@ require 'Config/Config.php';
 
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-</head>
 
-  <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-pie-chart"></i> <span>Eletrobras</span></a>
-            </div>
+        <!-- menu profile quick info -->
+        <?php
+          require_once("Menu/Menu_usuario.php");
+        ?>
+        <!-- /menu profile quick info -->
 
-            <div class="clearfix"></div>
+        <!-- sidebar menu -->
+        <?php
+          require_once("Menu/PL_Menu.php");
+        ?>
+        <!-- /sidebar menu -->
 
-                        <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="images/Eletrobras.png" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Usuário</span>
-                <h2><?php echo $_SESSION['usuario'] ?></h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            <?php
-              require_once("Menu/Menu_P.php");
-            ?>
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-
-            <?php
-              require_once("Menu/Menu_inf_PL.php");
-            ?>
-
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
-
+        <!-- /menu footer buttons -->
+        <?php
+          require_once("Menu/Menu_inf.php");
+        ?>
+        <!-- /menu footer buttons -->
+          
         <!-- top navigation -->
-            <?php
-              require_once("Menu/Menu_top.php");
-            ?>
+        <?php
+          require_once("Menu/Menu_top.php");
+        ?>
         <!-- top navigation -->
 
         <!-- page content -->
@@ -91,7 +61,7 @@ require 'Config/Config.php';
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Histórico</h3>
+                <h3>Demanda de Projetos</h3>
               </div>
 
               <div class="title_right">
@@ -109,40 +79,52 @@ require 'Config/Config.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Histórico de alterações</small></h2>
-                    
+                    <h2>Projetos</small></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <table id="datatable-buttons" class="table table-striped table-bordered">
+                    <a href='Alterar_Projetos_PJ.php?key=$key'></a>
+                    <table id="datatable-buttons" class="table table-striped table-bordered" >
                       <thead>
                         <tr>
+                          <th></th>
                           <th>Processo</th>
-                          <th>Atribuido</th>
+                          <th>Responsável Técnico</th>
                           <th>Status</th>
-                          <th>Data de Alteração</th>
-                          <th>Setor Responsável</th>
+                          <th>Nome (Empreendimento)</th>
+                          <th>Interresado</th>
+                          <th>Ordem</th>
+                          <th>Bairro</th>
+                          <th>Data de Entrada</th>
+                          <th>Potência</th>
+                          <th>Nº da VT</th>
+                          <th>Pasta</th>
+                          <th>Atribuido</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php 
                           
-                          $sql = $pdo->prepare("SELECT * FROM historico");
-                          $sql->execute();
+                          $querySelect = $link->query("SELECT * FROM demanda_viabilidades");
+                          while($value = $querySelect->fetch_assoc()):
                           
-                          if($sql->rowCount() > 0) {
-                            foreach ($sql->fetchAll() as $value) {
-                              ?>
-                                <tr>
-                                  <td><?php echo $value['processo'] ?></td>
-                                  <td><?php echo $value['atribuido'] ?></td>
-                                  <td><?php echo $value['status'] ?></td>
-                                  <td><?php echo $value['data'] ?></td>
-                                  <td><?php echo $value['setor'] ?></td>
-                                </tr>
-                              <?php
-                            }
-                          }
+                              $processo = $value['viabilidade_tecnica'];
+                              $tecnico = $value['tecnico'];
+                              $status = $value['status'];
+                              $descricao = $value['descricao'];
+                              $interessado = $value['interessado'];
+                              $ordem = $value['ordem'];
+                              $bairro = $value['bairro'];
+                              $data_entrada = $value['data_entrada'];
+                              $demanda_prevista = $value['demanda_prevista'];
+                              $viabilidade_tecnica = $value['viabilidade_tecnica'];
+                              $pasta = $value['pasta'];
+                              $atribuido = $value['atribuido'];
+
+                                  echo "<tr>";
+                                  echo "<td><a href='PJ_Alterar_Projetos.php?processo=$processo'><span class='fa fa-pencil' ></span></a></td><td>$processo</td><td>$tecnico</td><td>$status</td><td>$descricao</td><td>$interessado</td><td>$ordem</td><td>$bairro</td><td>$data_entrada</td><td>$demanda_prevista</td><td>$viabilidade_tecnica</td><td>$pasta</td><td>$atribuido</td>";
+                                echo "</tr>";
+                          endwhile;
                         ?>
                       </tbody>
                     </table>
@@ -156,15 +138,10 @@ require 'Config/Config.php';
         <!-- /page content -->
 
         <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-              Arthur Mendes - Programa de Cadastro de Projetos - <a href="http://eletrobrasalagoas.com/">Eletrobras distribuição Alagoas</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
+        <?php
+          require_once("Menu/Menu_footer.php");
+        ?>
         <!-- /footer content -->
-      </div>
-    </div>
 
     <!-- jQuery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
@@ -177,7 +154,7 @@ require 'Config/Config.php';
     <!-- iCheck -->
     <script src="../vendors/iCheck/icheck.min.js"></script>
     <!-- Datatables -->
-    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../vendors/datatables.net/js/jquery.dataTables.js"></script>
     <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
     <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>

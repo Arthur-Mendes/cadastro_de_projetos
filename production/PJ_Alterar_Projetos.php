@@ -117,6 +117,8 @@ require 'Config/conexao.php';
                 <ul class="nav child_menu">
                   <li><a href="PJ_Cadastrar_Projetos.php">Cadastrar Projetos</a></li>
                   <li><a href="PJ_Alterar_Projetos.php">Editar Projetos</a></li>
+                  <li><a href="PJ_Modificacao_Projetos.php">Modificação de Projetos</a></li>
+                  <li><a href="PJ_Cadastrar_Historico.php">Cadastrar Histórico</a></li>
                 </ul>
               </li>
               <li><a><i class="fa fa-table"></i> Demanda <span class="fa fa-chevron-down"></span></a>

@@ -35,7 +35,7 @@ require 'Config/Config.php';
   $sql->bindValue(":cpf", $cpf);
   $sql->execute();
 
-  header("Location: Cadastrar_Tecnicos_PJ.php");
+  header("Location: PJ_Cadastrar_Tecnicos.php");
     exit;
 }
 ?>
