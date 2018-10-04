@@ -118,7 +118,17 @@ require 'Config/conexao.php';
                               $atribuido = $value['atribuido'];
 
                                   echo "<tr>";
-                                  echo "<td><a href='PJ_Alterar_Projetos.php?processo=$processo'><span class='fa fa-pencil' ></span></a></td><td>$processo</td><td>$tecnico</td><td>$status</td><td>$descricao</td><td>$interessado</td><td>$ordem</td><td>$bairro</td><td>$data_entrada</td><td>$demanda_prevista</td><td>$atribuido</td>";
+                                  echo "<td><a href='PL_Alterar_Viabilidade.php?viabilidade_tecnica=$processo'><span class='fa fa-pencil' ></span></a></td>";
+                                  echo"<td>$processo</td>";
+                                  echo"<td>$tecnico</td>";
+                                  echo"<td>$status</td>";
+                                  echo"<td>$descricao</td>";
+                                  echo"<td>$interessado</td>";
+                                  echo"<td>$ordem</td>";
+                                  echo"<td>$bairro</td>";
+                                  echo"<td>$data_entrada</td>";
+                                  echo"<td>$demanda_prevista</td>";
+                                  echo"<td>$atribuido</td>";
                                 echo "</tr>";
                           endwhile;
                         ?>

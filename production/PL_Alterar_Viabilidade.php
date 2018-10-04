@@ -1,76 +1,53 @@
-<?php
+<?<?php
 session_start();
 require 'Config/Config.php';
+require 'Config/conexao.php';
+
+
   if(strstr($_SESSION['setor'],'Planejamento') !== false){
+
+    $processo = filter_input(INPUT_GET, 'viabilidade_tecnica', FILTER_SANITIZE_SPECIAL_CHARS);
+    $_SESSION['processo'] = $processo;
+    $querySelect = $link->query("SELECT * FROM viabilidades WHERE viabilidade_tecnica LIKE '%$processo'");
+
+    while($registros = $querySelect->fetch_assoc()):
+      $viabilidade_tecnica = $registros['viabilidade_tecnica'];
+      $processo = $registros['processo'];
+      $ordem = $registros['ordem'];
+      $descricao = $registros['descricao'];
+      $tecnico = $registros['tecnico'];
+      $interessado = $registros['interessado'];
+      $uc = $registros['uc'];
+      $cpf = $registros['cpf'];
+      $cidade = $registros['cidade'];
+      $bairro = $registros['bairro'];
+      $coordenada_x = $registros['coordenada_x'];
+      $coordenada_y = $registros['coordenada_y'];
+      $data_prevista = $registros['data_prevista'];
+      $data_entrada = $registros['data_entrada'];
+      $posto = $registros['posto'];
+      $alimentador = $registros['alimentador'];
+      $subestacao = $registros['subestacao'];
+      $pmw = $registros['pmw'];
+      $qmvar = $registros['qmvar'];
+      $bitola = $registros['bitola'];
+      $imax = $registros['imax'];
+      $imed = $registros['imed'];
+      $iacre = $registros['iacre'];
+      $ialim = $registros['ialim'];
+      $demanda_prevista = $registros['demanda_prevista'];
+      $potencia_instalada = $registros['potencia_instalada'];
+      $ultima_alteracao = $registros['ultima_alteracao'];
+      $status = $registros['status'];
+      $pasta = $registros['pasta'];
+      $atribuido = $registros['atribuido'];
+      $observacao = $registros['observacao'];
+
+    endwhile;
+
 
   }else{
     header("Location: login.php");
-  }
-
-  if(isset($_POST['processo'])) {
-  $processo = $_POST['processo'];
-  $ordem = $_POST['ordem'];
-  $descricao = $_POST['descricao'];
-  $tecnico = $_POST['tecnico'];
-  $interessado = $_POST['interessado'];
-  $uc = $_POST['uc'];
-  $cpf = $_POST['cpf'];
-  $cidade = $_POST['cidade'];
-  $bairro = $_POST['bairro'];
-  $coordenada_x = $_POST['coordenada_x'];
-  $coordenada_y = $_POST['coordenada_y'];
-  $data_entrada = $_POST['data_entrada'];
-  $data_prevista = $_POST['data_prevista'];
-  $posto = $_POST['posto'];
-  $alimentador = $_POST['alimentador'];
-  $subestacao = $_POST['subestacao'];
-  $pmw = $_POST['pmw'];
-  $bitola = $_POST['bitola'];
-  $imax = $_POST['imax'];
-  $imed = $_POST['imed'];
-  $iacre = $_POST['iacre'];
-  $demanda_prevista = $_POST['demanda_prevista'];
-  $potencia_instalada = $_POST['potencia_instalada'];
-  $situacao = $_POST['situacao'];
-  $status = $_POST['status'];
-  $pasta = $_POST['pasta'];
-  $atribuido = $_POST['atribuido'];
-  $observacao = $_POST['observacao'];
-
-  $sql = $pdo->prepare("INSERT INTO viabilidade (processo, ordem, descricao, tecnico, interessado, uc, cpf, cidade, bairro, coordenada_x, coordenada_y, data_entrada, data_prevista, posto, alimentador, subestacao, pmw, bitola, imax, imed, iacre, demanda_prevista, potencia_instalada, situacao, status, pasta, atribuido, observacao) VALUES (:processo, :ordem, :descricao, :tecnico, :interessado, :uc, :cpf, :cidade, :bairro, :coordenada_x, :coordenada_y, :data_entrada, :data_prevista, :posto, :alimentador, :subestacao, :pmw, :bitola, :imax, :imed, :iacre, :demanda_prevista, :potencia_instalada, :situacao, :status, :pasta, :atribuido, :observacao)");
-
-
-  $sql->bindValue(":processo", $processo);
-  $sql->bindValue(":ordem", $ordem);
-  $sql->bindValue(":descricao", $descricao);
-  $sql->bindValue(":tecnico", $tecnico);
-  $sql->bindValue(":interessado", $interessado);
-  $sql->bindValue(":uc", $uc);
-  $sql->bindValue(":cpf", $cpf);
-  $sql->bindValue(":cidade", $cidade);
-  $sql->bindValue(":bairro", $bairro);
-  $sql->bindValue(":coordenada_x", $coordenada_x);
-  $sql->bindValue(":coordenada_y", $coordenada_y);
-  $sql->bindValue(":data_entrada", $data_entrada);
-  $sql->bindValue(":data_prevista", $data_prevista);
-  $sql->bindValue(":posto", $posto);
-  $sql->bindValue(":alimentador", $alimentador);
-  $sql->bindValue(":subestacao", $subestacao);
-  $sql->bindValue(":pmw", $pmw);
-  $sql->bindValue(":bitola", $bitola);
-  $sql->bindValue(":imax", $imax);
-  $sql->bindValue(":imed", $imed);
-  $sql->bindValue(":iacre", $iacre);
-  $sql->bindValue(":demanda_prevista", $demanda_prevista);
-  $sql->bindValue(":potencia_instalada", $potencia_instalada);
-  $sql->bindValue(":situacao", $situacao);
-  $sql->bindValue(":status", $status);
-  $sql->bindValue(":pasta", $pasta);
-  $sql->bindValue(":atribuido", $atribuido);
-  $sql->bindValue(":observacao", $observacao);
-  $sql->execute();
-
-  header("Location: Editar_Projetos.php");
     exit;
 }
 
@@ -126,9 +103,51 @@ require 'Config/Config.php';
         <!-- /menu profile quick info -->
 
         <!-- sidebar menu -->
-        <?php
-          require_once("Menu/PL_Menu.php");
-        ?>
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Geral</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-home"></i> Inicio <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Menu.php">Programação e Atividades</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-search"></i> Pesquisa <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Pesquisa.php">Pesquisa Simples</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-file-text-o"></i>  Viabilidades <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Cadastrar_Viabilidade.php">Cadastrar Viabilidades</a></li>
+                      <li><a href="PL_Modificacao_Viabilidade.php">Modificar Viabilidades</a></li>
+                      <li><a href="PL_Alterar_Viabilidade.php">Editar Viabilidades</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Demanda <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Demanda.php">Visualizar Demanda</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Relatório <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Balanco_Geral.php">Balanço Geral</a></li>
+                      <li><a href="PL_Historico.php">Histórico</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-clone"></i>Arquivos <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Upload_Arquivos.php">Upload de Arquivos</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-comments-o"></i>Reportar <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="PL_Contato.php">Reportar Erro</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
         <!-- /sidebar menu -->
 
         <!-- /menu footer buttons -->
@@ -198,7 +217,7 @@ require 'Config/Config.php';
                           <label class="control-label col-md-2 col-sm-2 col-xs-12" for="processo">Nº do Processo
                           </label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input type="text" name="processo" class="form-control col-md-7 col-xs-12">
+                            <input type="text" name="processo" class="form-control col-md-7 col-xs-12" value="<?php echo $viabilidade_tecnica ?>">
                           </div>
 
                           <label class="control-label col-md-2 col-sm-2 col-xs-12" for="ordem">Especificação da Obra
@@ -223,7 +242,7 @@ require 'Config/Config.php';
                           <label class="control-label col-md-2 col-sm-2 col-xs-12" for="descricao">Descrição
                           </label>
                           <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" id="descricao" name="descricao" class="form-control col-md-7 col-xs-12">
+                            <input type="text" id="descricao" name="descricao" class="form-control col-md-7 col-xs-12" value="<?php echo $descricao ?>">
                           </div>
                         </div>
 
@@ -231,7 +250,7 @@ require 'Config/Config.php';
                           <label for="tecnico" class="control-label col-md-2 col-sm-2s col-xs-12">Técnico</label>
                           <div class="col-md-8 col-sm-8 col-xs-12">
                             <select name="tecnico" class="form-control" id="tecnico" placeholder="Campo Obrigatório">
-                              <option><?php echo $ordem ?></option>
+                              <option><?php echo $tecnico ?></option>
                                 <?php
                                   $selectTecnico = $pdo->prepare("SELECT * FROM tecnicos ORDER BY nome ASC");
                                   $selectTecnico->execute();
@@ -249,7 +268,7 @@ require 'Config/Config.php';
                           <label class="control-label col-md-2 col-sm-2 col-xs-12">Interessado
                           </label>
                           <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input id="birthday" name="interessado" class="date-picker form-control col-md-7 col-xs-12" type="text">
+                            <input id="birthday" name="interessado" class="date-picker form-control col-md-7 col-xs-12" type="text" value="<?php echo $interessado ?>">
                           </div>
                         </div>
                         
@@ -257,12 +276,12 @@ require 'Config/Config.php';
                           <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Cadastro Único
                           </label>
                           <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" name="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999999999'">
+                            <input type="text" name="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999999999'" value="<?php echo $uc ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">CPF/CNPJ
                           </label>
                           <div class="col-md-4 col-sm-4 col-xs-12">
-                            <input type="text" name="cpf" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '99.999.999/9999-99'">
+                            <input type="text" name="cpf" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '99.999.999/9999-99'" value="<?php echo $cpf ?>">
                           </div>
                         </div>
 
@@ -271,6 +290,7 @@ require 'Config/Config.php';
                           </label>
                           <div class="col-md-3 col-sm-3 col-xs-12">
                             <select name="cidade" class="form-control" id="cidade">
+                              <option><?php echo $cidade ?></option>
                               <?php
                                 $select = $pdo->prepare("SELECT * FROM cidade ORDER BY nome ASC");
                                 $select->execute();
@@ -286,7 +306,7 @@ require 'Config/Config.php';
                           </label>
                           <div class="col-md-3 col-sm-3 col-xs-12">
                             <select name="bairro" class="form-control" id="bairro">
-
+                                <option><?php echo $bairro ?></option>
                             </select>
                           </div>
                         </div>
@@ -297,12 +317,12 @@ require 'Config/Config.php';
                         <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Coordenada X
                         </label>
                          <div class="col-md-3 col-sm-3 col-xs-12">
-                           <input name="coordenada_x" type="text" id="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999999,99'">
+                           <input name="coordenada_x" type="text" id="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999999,99'" value="<?php echo $coordenada_x ?>">
                          </div>
                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Coordenada Y
                          </label>
                          <div class="col-md-3 col-sm-3 col-xs-12">
-                           <input name="coordenada_y" type="text" id="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '99999999,99'">
+                           <input name="coordenada_y" type="text" id="uc" class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '99999999,99'" value="<?php echo $coordenada_y?>">
                          </div>
                        </div>
 
@@ -311,7 +331,7 @@ require 'Config/Config.php';
                          </label>
                          <div class="col-md-3 col-sm-3 col-xs-12">
                            <div class='input-group date' id='myDatepicker2'>
-                             <input name="data_entrada" type='text' class="form-control" />
+                             <input name="data_entrada" value="<?php echo $data_entrada ?>"type='text' class="form-control" />
                              <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                              </span>
@@ -322,7 +342,7 @@ require 'Config/Config.php';
                          </label>
                          <div class="col-md-3 col-sm-3 col-xs-12">
                            <div class='input-group date' id='myDatepicker3'>
-                             <input name="data_prevista" type='text' class="form-control" />
+                             <input name="data_prevista" value="<?php echo $data_prevista ?>" type='text' class="form-control" />
                              <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                              </span>
@@ -337,44 +357,44 @@ require 'Config/Config.php';
                         <div class="form-group">
                           <label class="control-label col-md-2 col-sm-2 col-xs-12">Posto</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="posto" type="text" class="form-control">
+                            <input name="posto" type="text" class="form-control" value="<?php echo $posto ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">Alimentador</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="alimentador" type="text" class="form-control">
+                            <input name="alimentador" type="text" class="form-control" value="<?php echo $alimentador ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">Subestação</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="subestacao" type="text" class="form-control">
+                            <input name="subestacao" type="text" class="form-control" value="<?php echo $subestacao ?>">
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="control-label col-md-2 col-sm-2 col-xs-12">P(MW)</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="pmw" type="text" class="form-control">
+                            <input name="pmw" type="text" class="form-control" value="<?php echo $pmw ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">Bitola</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="bitola" type="text" class="form-control">
+                            <input name="bitola" type="text" class="form-control" value="<?php echo $bitola ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">I máx Alim</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="imax" type="text" class="form-control">
+                            <input name="imax" type="text" class="form-control" value="<?php echo $imax ?>">
                           </div>
                         </div>
                         <div class="form-group">
                           <label class="control-label col-md-2 col-sm-2 col-xs-12">I méd máx</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="imed" type="text" class="form-control">
+                            <input name="imed" type="text" class="form-control" value="<?php echo $imed ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">Acréc/I</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input name="iacre" type="text" class="form-control">
+                            <input name="iacre" type="text" class="form-control" value="<?php echo $iacre ?>">
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12">% Alim</label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
                             <div class="input-group">
-                              <input type="text" class="form-control" data-inputmask="'mask': '#%'">
+                              <input type="text" class="form-control" data-inputmask="'mask': '#%'" value="<?php echo $ialim ?>">
                               <span class="input-group-btn">
                               <button type="button" class="btn btn-primary">Atual</button>
                               </span>
@@ -388,52 +408,27 @@ require 'Config/Config.php';
 
                         <div class="form-group">
                           <label class="control-label col-md-2 col-sm-2 col-xs-12">Demanda</label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input name="demanda_prevista" type="text" class="form-control">
+                          <div class="col-md-1 col-sm-1 col-xs-12">
+                            <input name="demanda_prevista" type="text" class="form-control" value="<?php echo $demanda_prevista ?>">
                           </div>
-                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Potência Instalada</label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input name="potencia_instalada" type="text" class="form-control">
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">KVA Instalada</label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input name="potencia_instalada" type="text" class="form-control" value="<?php echo $potencia_instalada ?>">
                           </div>
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Situação</label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select name="situacao" class="form-control">
-                              <option></option>
-                              <option>NÃO INICIADO</option>
-                              <option>PROJETO EM ANÁLISE</option>
-                              <option>PROJETO DEVOLVIDO</option>
-                              <option>PROJETO LIBERADO ORÇAMENTO</option>
-                              <option>PROJETO EM ORÇAMENTAÇÃO</option>
-                              <option>PROJETO CADASTRADO SGO</option>
-                              <option>PROJETO AUTORIZADO</option>
-                              <option>OBRA FISCALIZADA</option>
-                              <option>OBRA DESPACHADA COMERCIAL</option>
-                              <option>OBRA FECHADA</option>
-                            </select>
-                          </div>
-                          <label class="control-label col-md-1 col-sm-1 col-xs-12">Status</label>
-                          <div class="col-md-4 col-sm-4 col-xs-12">
-                            <input name="status" type="text" class="form-control">
+                          <label class="control-label col-md-1 col-sm-1col-xs-12">Pasta</label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input name="pasta" type="text" class="form-control" value="<?php echo $pasta ?>">
                           </div>
                         </div>
                         <div class="form-group">
-                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Pasta</label>
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Status</label>
                           <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input name="pasta" type="text" class="form-control">
+                            <input name="status" type="text" class="form-control" value="<?php echo $status ?>">
                           </div>
-                          <label class="control-label col-md-1 col-sm-1 col-xs-12">Atribuido</label>
-                          <div class="col-md-4 col-sm-4 col-xs-12">
-                            <select name="atribuido" class="form-control">
-                              <option></option>
-                              <option>ANA CAVALCANTE</option>
-                              <option>CARLA RODRIGUES</option>
-                              <option>CÁSSIO NATAN</option>
-                              <option>DOUGLAS FERREIRA</option>
-                              <option>ESTAGIÁRIO</option>
-                            </select>
-                          </div> 
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Atribuido</label>
+                          <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input name="pasta" type="text" class="form-control" value="<?php echo $_SESSION ['usuario'] ?>">
+                          </div>
                         </div>
 
                         <br/>
@@ -441,7 +436,7 @@ require 'Config/Config.php';
                         <div class="ln_solid"></div>
 
                         <div class="x_content">
-                        <textarea id="message" class="form-control" name="observacao" rows="5" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"></textarea> 
+                        <textarea id="message" class="form-control" name="observacao" rows="5" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"><?php echo $observacao ?></textarea> 
                         <br />
                         </div>
 
