@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'Config/Config.php';
-require 'Config/Config2.php';
+
 
   if(strstr($_SESSION['setor'],'Comercial') !== false){
 
@@ -11,40 +11,58 @@ require 'Config/Config2.php';
 
   if(isset($_POST['nome'])) {
   $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+  $data_nascimento =  filter_input(INPUT_POST, 'data_nascimento', FILTER_SANITIZE_SPECIAL_CHARS);
   $logradouro =  filter_input(INPUT_POST, 'logradouro', FILTER_SANITIZE_SPECIAL_CHARS);
-  $bairro =  filter_input(INPUT_POST, 'bairro', FILTER_SANITIZE_SPECIAL_CHARS);
+  $sexo =  filter_input(INPUT_POST, 'sexo', FILTER_SANITIZE_SPECIAL_CHARS);
   $cidade =  filter_input(INPUT_POST, 'cidade', FILTER_SANITIZE_SPECIAL_CHARS);
-  $fone1 =  filter_input(INPUT_POST, 'fone1', FILTER_SANITIZE_NUMBER_INT);
-  $fone2 =  filter_input(INPUT_POST, 'fone2', FILTER_SANITIZE_NUMBER_INT);
+  $bairro =  filter_input(INPUT_POST, 'bairro', FILTER_SANITIZE_SPECIAL_CHARS);
+  $cep =  filter_input(INPUT_POST, 'cep', FILTER_SANITIZE_NUMBER_INT);
+  $cpf =  filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_NUMBER_INT);
+  $rg =  filter_input(INPUT_POST, 'rg', FILTER_SANITIZE_NUMBER_INT);
   $crea =  filter_input(INPUT_POST, 'crea', FILTER_SANITIZE_NUMBER_INT);
-  $email1 =  filter_input(INPUT_POST, 'email1', FILTER_SANITIZE_EMAIL);
-  $email2 =  filter_input(INPUT_POST, 'email2', FILTER_SANITIZE_EMAIL);
-  $cpf =  filter_input(INPUT_POST, 'cpf', FILTER_SANITIZE_SPECIAL_CHARS);
+  $formacao =  filter_input(INPUT_POST, 'formacao', FILTER_SANITIZE_SPECIAL_CHARS);
+  $telefone =  filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_NUMBER_INT);
+  $celular =  filter_input(INPUT_POST, 'celular', FILTER_SANITIZE_NUMBER_INT);
+  $empresa =  filter_input(INPUT_POST, 'empresa', FILTER_SANITIZE_SPECIAL_CHARS);
+  $cnpj =  filter_input(INPUT_POST, 'cnpj', FILTER_SANITIZE_NUMBER_INT);
+  $visto =  filter_input(INPUT_POST, 'visto', FILTER_SANITIZE_SPECIAL_CHARS);
+  $email_pessoal =  filter_input(INPUT_POST, 'email_pessoal', FILTER_SANITIZE_EMAIL);
+  $email_empresa =  filter_input(INPUT_POST, 'email_empresa', FILTER_SANITIZE_EMAIL);
   $login =  filter_input(INPUT_POST, 'login', FILTER_SANITIZE_SPECIAL_CHARS);
-  $senha =  md5($_POST ['txt_serial']);
+  $senha =  md5($_POST ['txt_serial']);    
+  $anuidade =  filter_input(INPUT_POST, 'anuidade', FILTER_SANITIZE_SPECIAL_CHARS);  
+  $atribuido =  filter_input(INPUT_POST, 'atribuido', FILTER_SANITIZE_SPECIAL_CHARS);  
+  $ultima_alteracao =  filter_input(INPUT_POST, 'ultima_alteracao', FILTER_SANITIZE_SPECIAL_CHARS);  
 
 
-  $sql = $pdo->prepare("INSERT INTO clientes (nome, logradouro, bairro, cidade, fone1, fone2, crea, email1, email2, cpf, login) VALUES (:nome, :logradouro, :bairro, :cidade, :fone1, :fone2, :crea, :email1, :email2, :cpf, :login)");
-
-  $sql2 = $pdo->prepare("INSERT INTO usuarios (nome, login, senha) VALUES ('Cliente', :login, :senha)");
+  $sql = $pdo->prepare("INSERT INTO clientes (nome, data_nascimento, logradouro, sexo, cidade, bairro, cep, cpf, rg, cre, formacao, telefone, celular, empresa, cnpj, visto, email_pessoal, email_empresa, login, anuidade, atribuido, ultima_alteracao) VALUES (:nome, :data_nascimento, :logradouro, :sexo, :cidade, :bairro, :cep, :cpf, :rg, :cre, :formacao, :telefone, :celular, :empresa, :cnpj, :visto, :email_pessoal, :email_empresa, :login, :anuidade, :atribuido, :ultima_alteracao)");
 
 
   $sql->bindValue(":nome", $nome);
+  $sql->bindValue(":data_nascimento", $data_nascimento);  
   $sql->bindValue(":logradouro", $logradouro);
-  $sql->bindValue(":bairro", $bairro);
+  $sql->bindValue(":sexo", $sexo);
   $sql->bindValue(":cidade", $cidade);
-  $sql->bindValue(":fone1", $fone1);
-  $sql->bindValue(":fone2", $fone2);
-  $sql->bindValue(":crea", $crea);
-  $sql->bindValue(":email1", $email1);
-  $sql->bindValue(":email2", $email2);
+  $sql->bindValue(":bairro", $bairro);
+  $sql->bindValue(":cep", $cep);
   $sql->bindValue(":cpf", $cpf);
+  $sql->bindValue(":rg", $rg);  
+  $sql->bindValue(":crea", $crea);
+  $sql->bindValue(":formacao", $formacao);
+  $sql->bindValue(":telefone", $telefone);
+  $sql->bindValue(":celular", $celular);
+  $sql->bindValue(":empresa", $empresa); 
+  $sql->bindValue(":cnpj", $cnpj);
+  $sql->bindValue(":visto", $visto);  
+  $sql->bindValue(":email_pessoal", $email_pessoal);
+  $sql->bindValue(":email_empresa", $email_empresa);
   $sql->bindValue(":login", $login);
+  $sql->bindValue(":senha", $senha);
+  $sql->bindValue(":anuidade", $anuidade);
+  $sql->bindValue(":atribuido", $atribuido);
+  $sql->bindValue(":ultima_alteracao", $ultima_alteracao);
   $sql->execute();
 
-  $sql2->bindValue(":login", $login);
-  $sql2->bindValue(":senha", $senha);
-  $sql2->execute();
 
   header("Location: C_Cadastrar_Clientes.php");
     exit;
@@ -73,11 +91,12 @@ require 'Config/Config2.php';
     <link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
     <!-- Bootstrap Colorpicker -->
     <link href="../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-
     <link href="../vendors/cropper/dist/cropper.min.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <!-- Dropzone.js -->
+    <link href="../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+
 
         <!-- menu profile quick info -->
         <?php
@@ -137,36 +156,47 @@ require 'Config/Config2.php';
                       <form method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         <br/>
                         <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="nome">Nome
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Nome
                           </label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
+                          <div class="col-md-4 col-sm-4 col-xs-12">
                             <input type="text" id="nome" name="nome"  class="form-control col-md-7 col-xs-12" placeholder="Insira o nome do técnico...">
+                            <input type="hidden" id="atribuido" name="atribuido" value="<?php echo $_SESSION['usuario'] ?>">
                           </div>
+                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Data de nascimento
+                         </label>
+                         <div class="col-md-2 col-sm-2 col-xs-12">
+                           <div class='input-group date' id='myDatepicker1'>
+                             <input name="data_nascimento" id="data_nascimento" value="<?php echo date('d/m/Y');?>"  type='text' class="form-control" />
+                             <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                             </span>
+                             <div class='input-group date' id='myDatepicker2'>
+                             <input name="ultima_alteracao" id="ultima_alteracao" value="<?php echo date('d/m/Y');?>"  type='hidden' />
+                           </div>
+                           </div>
+                         </div>
                         </div>
 
                         <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Logradouro
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">Logradouro
                           </label>
-                          <div class="col-md-6 col-sm-6 col-xs-12">
+                          <div class="col-md-5 col-sm-5 col-xs-12">
                             <input id="logradouro" name="logradouro" class="date-picker form-control col-md-7 col-xs-12" type="text" placeholder="Endereço completo...">
+                          </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="nome">Sexo
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <select name="sexo" class="form-control" id="sexo">
+                              <option>Selecione uma opção...</option>
+                              <option>Feminino</option>
+                              <option>Masculino</option>
+                              <option>Outro</option>
+                            </select>
                           </div>
                         </div>
                         
                         <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="uc">CPF
-                          </label>
-                          <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input type="text" id="cpf" name="cpf"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '999.999.999-99'" placeholder="Campo Obrigatório">
-                          </div>
-                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">CREA
-                          </label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" id="crea" name="crea"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '999999999-9'" placeholder="Campo Obrigatório">
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="uc">Cidade
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Cidade
                           </label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
                             <select name="cidade" class="form-control" id="cidade" placeholder="Campo Obrigatório">
@@ -184,48 +214,104 @@ require 'Config/Config2.php';
                           </div>
                           <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">Bairro
                           </label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
+                          <div class="col-md-2 col-sm-2 col-xs-12">
                             <select id="bairro" name="bairro" class="form-control" placeholder="Campo Obrigatório">
                               <option></option>
                             </select>
                           </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12">CEP
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input id="cep" name="cep" class="date-picker form-control col-md-7 col-xs-12" type="text" placeholder="Endereço completo...">
+                          </div>
+
                         </div>
 
                         <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="uc">Tel 1
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12">CPF
                           </label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input type="text" id="fone1" name="fone1" class="form-control col-md-7 col-xs-12" data-inputmask="'mask' : '(99) 99999-9999'" placeholder="Campo Obrigatório">
+                            <input type="text" id="cpf" name="cpf"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '999.999.999-99'" placeholder="Campo Obrigatório">
                           </div>
-                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">Tel 2
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12">RG
                           </label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" id="fone2" name="fone2"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask' : '(99) 99999-9999'">
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="text" id="rg" name="rg"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask': '9999999-9'" placeholder="Campo Obrigatório">
+                          </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12">CREA Nº
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="email" id="crea" name="crea" class="form-control col-md-7 col-xs-12" placeholder="Campo Obrigatório">
+                          </div>
+
+                        </div>
+
+                        <div class="form-group">
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Formação Profissional
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <select name="formacao" class="form-control" id="formacao">
+                              <option>Selecione uma opção...</option>
+                              <option>Engenheiro Eletricista</option>
+                              <option>Eletrotécnico</option>
+                            </select>
+                          </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12">Telefone 
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="text" id="telefone" name="telefone"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask' : '(99) 99999-9999'">
+                          </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12">Celular 
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="text" id="celular" name="celular"  class="form-control col-md-7 col-xs-12" data-inputmask="'mask' : '(99) 99999-9999'">
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="uc">Email 1
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Empresa
                           </label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <input type="email" id="email1" name="email1" class="form-control col-md-7 col-xs-12" placeholder="Campo Obrigatório">
+                            <input type="text" id="empresa" name="empresa" class="form-control col-md-7 col-xs-12">
                           </div>
-                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">Email 2
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">CNPJ
                           </label>
-                          <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="email" id="email2" name="email2" class="form-control col-md-7 col-xs-12">
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="text" id="cnpj" name="cnpj" class="form-control col-md-7 col-xs-12">
+                          </div>
+                          <label class="control-label col-md-1 col-sm-1 col-xs-12" for="uc">Visto
+                          </label>
+                          <div class="col-md-2 col-sm-2 col-xs-12">
+                            <input type="text" id="visto" name="visto" class="form-control col-md-7 col-xs-12">
                           </div>
                         </div>
+
+                        <div class="form-group">
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Email Pessoal
+                          </label>
+                          <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="email" id="email_pessoal" name="email_pessoal" class="form-control col-md-7 col-xs-12">
+                          </div>
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="uc">Email Empresa
+                          </label>
+                          <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="email" id="email_empresa" name="email_empresa" class="form-control col-md-7 col-xs-12">
+                          </div>
+                        </div>
+
+                       <div class="ln_solid"></div>                                
+                       <h2>Dados de acesso</h2>
+                       <div class="ln_solid"></div>
 
                        <div class="form-group">
-                         <label class="control-label col-md-3 col-sm-3 col-xs-12"> Login de acesso
+                         <label class="control-label col-md-2 col-sm-2 col-xs-12"> Login de acesso
                          </label>
                          <div class="col-md-2 col-sm-2 col-xs-12">
                            <input name="login" type="text" id="login" class="form-control col-md-7 col-xs-12">
                          </div>
-                         <label class="control-label col-md-1 col-sm-1 col-xs-12">senha 
+                         <label class="control-label col-md-1 col-sm-1 col-xs-12">Senha 
                         </label>
-                         <div class="col-md-3 col-sm-3 col-xs-12">
+                         <div class="col-md-2 col-sm-2 col-xs-12">
                            <div class="input-group">
                             <input type="text" class="form-control" value="" name="txt_serial" id="txt_serial">
                             <span class="input-group-btn">
@@ -233,10 +319,20 @@ require 'Config/Config2.php';
                             </span>
                           </div>
                          </div>
+                         <label class="control-label col-md-1 col-sm-1 col-xs-12">Anuidade
+                         </label>
+                         <div class="col-md-2 col-sm-2 col-xs-12">
+                           <div class='input-group date' id='myDatepicker3'>
+                             <input name="anuidade" id="anuidade" value="<?php echo date('d/m/Y');?>"  type='text' class="form-control" />
+                             <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                             </span>
+                           </div>
+                         </div>
                        </div>
 
                         <br/>
-                        <div class="x_panel">
+
                           <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-7">
                               <button type="reset" class="btn btn-primary">Limpar</button>
@@ -246,9 +342,75 @@ require 'Config/Config2.php';
                           <br />
                           <div class="ln_solid"></div>
                         </div>
+                        <br/>
                       </form>
                     </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      <div class="x_panel">
+                        <div class="x_title">
+                          <h2>Cópia da Carteira do CREA</h2>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                        <form action="PHPUploads/up_crea.php" class="dropzone" id="dropzone">
+                          <div class="fallback">
+                            <input type="file" name="file" id="arquivos">
+                          </div>
+                        </form>
+                        <script type="text/javascript">
+                          var dropzone = new Dropzone("#arquivos", {
+                            url: 'PHPUploads/up_crea.php'
+                          })
+                        </script>
+                        </div>
+                      </div>
                     </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      <div class="x_panel">
+                        <div class="x_title">
+                          <h2>Comprovante de anuidade</h2>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                        <form action="PHPUploads/up_anuidade.php" class="dropzone" id="dropzone">
+                          <div class="fallback">
+                            <input type="file" name="file" multiple id="arquivos">
+                          </div>
+                        </form>
+                        <script type="text/javascript">
+                          var dropzone = new Dropzone("#arquivos", {
+                            url: 'PHPUploads/up_anuidade.php'
+                          })
+                        </script>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                      <div class="x_panel">
+                        <div class="x_title">
+                          <h2>Comprovante de Residência</h2>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                        <form action="PHPUploads/up_cdr.php" class="dropzone" id="dropzone">
+                          <div class="fallback">
+                            <input type="file" name="file" multiple id="arquivos">
+                          </div>
+                        </form>
+                        <script type="text/javascript">
+                          var dropzone = new Dropzone("#arquivos", {
+                            url: 'PHPUploads/up_cdr.php'
+                          })
+                        </script>
+                        </div>
+                      </div>
+                    </div>
+
+                    </div>
+                    <br/>
                   </div>
                 </div>
               </div>
@@ -306,38 +468,24 @@ require 'Config/Config2.php';
     <script src="../vendors/jquery-knob/dist/jquery.knob.min.js"></script>
     <!-- FullScreen -->
     <script src="js/FullScreen.js"></script>
-
+    <!-- Dropzone.js -->
+    <script src="PHPUploads/dropzone.js"></script>
 
 <script>
-    $('#myDatepicker').datetimepicker();
+
+    $('#myDatepicker1').datetimepicker({
+        format: 'DD.MM.YYYY'
+    });
     
     $('#myDatepicker2').datetimepicker({
         format: 'DD.MM.YYYY'
     });
     
     $('#myDatepicker3').datetimepicker({
-        format: 'hh:mm A'
-    });
-    
-    $('#myDatepicker4').datetimepicker({
-        ignoreReadonly: true,
-        allowInputToggle: true
-    });
-
-    $('#datetimepicker6').datetimepicker();
-    
-    $('#datetimepicker7').datetimepicker({
-        useCurrent: false
-    });
-    
-    $("#datetimepicker6").on("dp.change", function(e) {
-        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-    });
-    
-    $("#datetimepicker7").on("dp.change", function(e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        format: 'DD.MM.YYYY'
     });
 </script>
+
 <script>
   $("#cidade").on("change",function(){
 
@@ -369,7 +517,7 @@ function geraSerial() {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for (var i = 0; i < 8; i++)
+  for (var i = 0; i < 6; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
@@ -379,6 +527,13 @@ $(function(){
       $('#txt_serial').val(geraSerial());
   });
 });
+</script>
+
+<script>
+
+function teste(file) {
+ return 'olá';
+}
 </script>
 
   </body>

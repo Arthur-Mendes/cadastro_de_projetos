@@ -36,6 +36,7 @@
                       <li><a href="PJ_Balanco_Geral.php">Gestão de Relatórios</a></li>
                       <li><a href="PJ_Historico.php">Histórico</a></li>
                       <li><a href="PJ_Mapeamento_Compartilhamento.php">Mapa de Compartilhamento</a></li>
+                      <li><a href="PJ_Zoneamento_Agressivo.php">Zoneamento Agressivo</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-clone"></i>Arquivos <span class="fa fa-chevron-down"></span></a>

@@ -316,16 +316,15 @@ require 'Config/Config4.php';
 														</div>
                        </div>
 
-                        <br/>
-                        <h2>Observações <small>Sobre a Viabilidade</small></h2>
-                        <div class="ln_solid"></div>
 
+                        <br/>
+                        <h2>Observações <small>Sobre o projeto</small></h2>
+                        <div class="ln_solid"></div>
                         <div class="x_content">
-                        <textarea id="observacao" class="form-control" name="observacao" rows="5" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"></textarea> 
+                        <textarea id="observacao" class="form-control" name="observacao" rows="5" style="width: 58%; margin-left: 25%"></textarea> 
                         <br />
                         </div>
 
-                      <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
                           <button class="btn btn-primary" type="reset">Limpar</button>

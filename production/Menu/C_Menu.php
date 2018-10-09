@@ -27,7 +27,6 @@
                 <li><a><i class="fa fa-file-text-o"></i>  Cadastro <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="C_Cadastrar_Clientes.php">Cadastrar Cliente</a></li>
-                        <li><a href="C_Cadastrar_Projetos.php">Cadastrar Projetos</a></li>
                         <li><a href="C_Demanda_GD.php">Demanda de Clientes</a></li>
                     </ul>
                 </li>
