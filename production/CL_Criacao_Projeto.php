@@ -120,6 +120,7 @@ require 'Config/Config.php';
                                 <option value="2">Microgeração igual ou inferior a 10kW</option>
                                 <option value="3">Microgeração superior a 10kW</option>
                             </select>
+
                         </div>
                       </div>
 
@@ -128,14 +129,16 @@ require 'Config/Config.php';
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-8">
                           <button onclick="tipogeracao()" type="button" class="btn btn-success">Avançar</button>
                         </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+                        </div>
                       </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <!-- /page content -->
 
         <!-- footer content -->
