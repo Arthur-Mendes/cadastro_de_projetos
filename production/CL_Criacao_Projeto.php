@@ -120,6 +120,7 @@ require 'Config/Config.php';
                                 <option value="2">Microgeração igual ou inferior a 10kW</option>
                                 <option value="3">Microgeração superior a 10kW</option>
                             </select>
+
                         </div>
                       </div>
 
@@ -135,10 +136,9 @@ require 'Config/Config.php';
                         </div>
                         </div>
                         </div>
+
                         </div>
-
-          
-
+                      </div>
         <!-- /page content -->
 
         <!-- footer content -->
